@@ -50,8 +50,9 @@ export const site: SiteContent = {
     },
     {
       kind: "pullback", id: "obrador", n: "02", label: "Obrador",
-      a: v("croissant-pistacho", "Croissant de pistacho"), origin: "50% 50%",
-      b: v("argentinos", "Argentinos de chocolate recién hechos"),
+      // El vídeo del croissant lleva texto incrustado: va en segundo plano (sin zoom fuerte bajo el título)
+      a: v("argentinos", "Argentinos de chocolate recién hechos"), origin: "50% 50%",
+      b: v("croissant-pistacho", "Croissant de pistacho"),
       title: "Crujientes por fuera, irresistibles por dentro", sub: "Argentinos de chocolate y croissant de pistacho: productos artesanales.",
     },
     {
