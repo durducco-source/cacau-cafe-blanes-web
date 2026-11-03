@@ -1,11 +1,16 @@
-import type { SiteContent } from "./types";
+import type { Media, SiteContent } from "./types";
 
 // Contenido verificado en Instagram @cacau_cafe_blanes (bio, textos, fotos y vídeos)
-// y en fichas públicas del negocio (dirección, teléfono y valoración en Google).
+// y en fichas públicas del negocio (dirección, teléfono y valoración en Google). No se ha inventado información.
 const PHONE = "+34669785951";
 const IG = "https://www.instagram.com/cacau_cafe_blanes/";
-const MAPS = "https://www.google.com/maps/dir/?api=1&destination=Cacau+Caf%C3%A8,+Carrer+de+Tapioles+21,+17300+Blanes";
 const URL = "https://durducco-source.github.io/cacau-cafe-blanes-web/";
+const MAPS = "https://www.google.com/maps/dir/?api=1&destination=Cacau+Caf%C3%A8,+Carrer+de+Tapioles+21,+17300+Blanes";
+
+const v = (name: string, alt: string, poster = `/media/${name}.jpg`): Media => ({ type: "video", src: `/media/${name}.mp4`, poster, alt });
+const wp = (name: string, alt: string): Media => ({ src: `/media/${name}.webp`, alt });
+
+const llegar = { label: "Cómo llegar", href: MAPS, external: true };
 
 export const site: SiteContent = {
   lang: "es",
@@ -17,146 +22,80 @@ export const site: SiteContent = {
     url: URL,
     image: `${URL}media/og-cacau.jpg`,
     keywords: ["cafetería Blanes", "café de especialidad Blanes", "brunch Blanes", "desayuno Blanes", "iced latte Costa Brava", "Cacau Cafè"],
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "CafeOrCoffeeShop",
-      name: "Cacau Cafè",
-      url: URL,
-      telephone: PHONE,
-      servesCuisine: ["Café", "Brunch", "Bollería"],
-      address: { "@type": "PostalAddress", streetAddress: "Carrer de Tapioles, 21", addressLocality: "Blanes", postalCode: "17300", addressRegion: "Girona", addressCountry: "ES" },
-      sameAs: [IG],
+  },
+  jsonLd: {
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    name: "Cacau Cafè",
+    url: URL,
+    telephone: PHONE,
+    servesCuisine: ["Café", "Brunch", "Bollería"],
+    address: { "@type": "PostalAddress", streetAddress: "Carrer de Tapioles, 21", addressLocality: "Blanes", postalCode: "17300", addressRegion: "Girona", addressCountry: "ES" },
+    sameAs: [IG],
+  },
+  primary: { label: "Cómo llegar", href: MAPS, external: true, icon: "arrow" },
+  phone: PHONE,
+
+  scenes: [
+    {
+      kind: "arrival", id: "inicio", n: "00", label: "Inicio",
+      a: v("terraza", "Caja de bollería artesanal de Cacau Cafè"),
+      b: v("rutina", "Café en la terraza de la calle Tapioles"),
+      kicker: "Especialistas en café · Blanes", title: "Cacau Cafè", sub: "Abrimos todos los días", enter: "La hora Cacau",
     },
-  },
-  nav: [
-    { label: "La casa", href: "#casa" },
-    { label: "Momentos", href: "#momentos" },
-    { label: "La carta", href: "#carta" },
-    { label: "Galería", href: "#galeria" },
-    { label: "Visítanos", href: "#visitanos" },
+    {
+      kind: "reel", id: "cafe", n: "01", label: "Café",
+      videos: [v("latte-art", "Café con leche con latte art"), v("caramel-latte", "Caramel latte con bollería"), v("iced-caramel-latte", "Iced caramel latte para llevar")],
+      title: "Especialistas en café", sub: "Del latte de cada mañana al iced caramel latte para llevar.",
+    },
+    {
+      kind: "pullback", id: "obrador", n: "02", label: "Obrador",
+      a: v("croissant-pistacho", "Croissant de pistacho"), origin: "50% 50%",
+      b: v("argentinos", "Argentinos de chocolate recién hechos"),
+      title: "Crujientes por fuera, irresistibles por dentro", sub: "Argentinos de chocolate y croissant de pistacho: productos artesanales.",
+    },
+    {
+      kind: "door", id: "brunch", n: "03", label: "Brunch",
+      door: wp("vegetal-1", "Bocadillo Vegetal XL con salmón y rúcula"),
+      track: [wp("vegetal-3", "Vegetal XL"), wp("bowl-0", "Yogur griego con kiwi y plátano"), wp("bowl-2", "Bowl de yogur con fruta fresca"), wp("vegetal-0", "Vegetal XL recién preparado"), wp("bowl-3", "Bowl de yogur")],
+      title: "Fresco. Natural. Delicioso.", sub: "Yogur griego con fruta fresca y un Vegetal XL que te alegra la mañana.",
+    },
+    {
+      kind: "list", id: "carta", n: "04", label: "Carta",
+      back: v("compartir", "Dos personas compartiendo café y croissants"),
+      title: "Para *cada antojo*",
+      groups: [
+        { name: "Café", items: [{ name: "Café con leche", detail: "Con latte art" }, { name: "Caramel latte", detail: "Caliente" }, { name: "Iced caramel latte", detail: "Para tomar o para llevar" }] },
+        { name: "Bollería", items: [{ name: "Argentinos de chocolate", detail: "Crujientes por fuera, chocolate por dentro" }, { name: "Croissant de pistacho", detail: "Con crema de pistacho" }, { name: "Croissants", detail: "Para desayunar o merendar" }] },
+        { name: "Brunch", items: [{ name: "Yogur griego con fruta fresca", detail: "Kiwi, plátano y toppings" }, { name: "Vegetal XL", detail: "Bocadillo vegetal con salmón y rúcula" }] },
+      ],
+      note: "Algunos de nuestros favoritos. Carta completa y precios en el local.",
+    },
+    {
+      kind: "depth", id: "para-llevar", n: "05", label: "Para llevar",
+      back: v("para-llevar", "Bolsa para llevar de Cacau Cafè"),
+      cards: [wp("post-0", "Bollería artesanal para llevar"), wp("post-2", "Bollería artesanal")],
+      title: "Llévatelo y disfrútalo", sub: "Café y bollería artesanal, también para llevar.",
+    },
+    {
+      kind: "finale", id: "visitanos", n: "06", label: "Visítanos",
+      a: v("bowl-yogur", "Yogur griego con fruta fresca", "/media/bowl-yogur.webp"),
+      title: "Tu desayuno y tu merienda *te están esperando*",
+      ctas: [llegar, { label: "Llamar", href: `tel:${PHONE}` }, { label: "Instagram", href: IG, external: true }],
+      info: [
+        { label: "Dirección", value: "Carrer de Tapioles, 21 · Blanes", href: MAPS },
+        { label: "Horario", value: "Abrimos todos los días" },
+      ],
+    },
   ],
-  cta: { label: "Cómo llegar", href: MAPS, external: true },
-  hero: {
-    scrollHint: "Desliza",
-    acts: [
-      { label: "Primer acto", title: "Cacau *Cafè.*", text: "Un rincón de auténtico placer cafetero en el corazón de Blanes.", media: { type: "video", src: "/media/terraza.mp4", poster: "/media/terraza.jpg", alt: "Caja de bollería artesanal de Cacau Cafè" } },
-      { label: "Segundo acto", title: "El *café.*", text: "Especialistas en café: del latte de cada mañana al iced caramel latte para llevar.", media: { type: "video", src: "/media/latte-art.mp4", poster: "/media/latte-art.jpg", alt: "Café con leche con latte art" } },
-      { label: "Tercer acto", title: "El *obrador.*", text: "Productos artesanales: argentinos de chocolate, croissants de pistacho y mucho más.", media: { type: "video", src: "/media/argentinos.mp4", poster: "/media/argentinos.jpg", alt: "Argentinos de chocolate recién hechos" } },
-      { label: "Cuarto acto", title: "El *momento.*", text: "Desayuno o merienda, pero compartido, que sabe mejor.", media: { type: "video", src: "/media/compartir.mp4", poster: "/media/compartir.jpg", alt: "Dos personas compartiendo café y croissants" } },
-    ],
-  },
-  intro: {
-    id: "casa",
-    eyebrow: "La casa",
-    title: "Un rincón de *auténtico placer cafetero.*",
-    paragraphs: [
-      "Cacau Cafè es una cafetería en Blanes especializada en café y en productos artesanales. Abrimos todos los días para tu desayuno, tu brunch o tu merienda.",
-      "Lattes y cafés bien hechos, bollería con chocolate, bowls de yogur con fruta fresca y bocadillos generosos. Sin prisas, en la terraza o para llevar.",
-    ],
-    stats: [
-      { value: "4,9", label: "Google · 191 reseñas" },
-      { value: "7/7", label: "Abrimos todos los días" },
-      { value: "Café", label: "Especialistas" },
-      { value: "Blanes", label: "Carrer de Tapioles" },
-    ],
-  },
-  chapters: {
-    id: "momentos",
-    eyebrow: "Momentos",
-    title: "La hora *Cacau Cafè.*",
-    items: [
-      {
-        label: "Café",
-        title: "Que no nos quiten *nuestro iced latte.*",
-        text: "Del caramel latte caliente al iced caramel latte para llevar: café de especialidad para cada momento del día.",
-        bullets: ["Cafés y lattes", "Iced caramel latte", "Para tomar o para llevar"],
-        media: { type: "video", src: "/media/iced-caramel-latte.mp4", poster: "/media/iced-caramel-latte.jpg", alt: "Iced caramel latte en vaso de Cacau Cafè" },
-      },
-      {
-        label: "Bollería",
-        title: "Crujientes por fuera, *irresistibles por dentro.*",
-        text: "Nuestros argentinos de chocolate son de otro planeta. Y un miércoles cualquiera también puede tener croissant de pistacho.",
-        bullets: ["Argentinos de chocolate", "Croissant de pistacho", "Productos artesanales"],
-        media: { type: "video", src: "/media/croissant-pistacho.mp4", poster: "/media/croissant-pistacho.jpg", alt: "Croissant de pistacho" },
-      },
-      {
-        label: "Brunch",
-        title: "Fresco. Natural. *Delicioso.*",
-        text: "Yogur griego con fruta fresca, y un Vegetal XL que te alegra la mañana, el día y hasta el fin de semana.",
-        bullets: ["Bowl de yogur griego con fruta", "Bocadillo Vegetal XL", "Desayunos y meriendas"],
-        media: { type: "image", src: "/media/bowl-0.webp", alt: "Bowl de yogur griego con kiwi, plátano y chocolate" },
-      },
-    ],
-  },
-  menu: {
-    id: "carta",
-    eyebrow: "La carta",
-    title: "Para *cada antojo.*",
-    intro: "Algunos de nuestros favoritos. Consulta la carta completa y los precios en el local.",
-    groups: [
-      { name: "Café", items: [
-        { name: "Café con leche", detail: "Con latte art" },
-        { name: "Caramel latte", detail: "Caliente" },
-        { name: "Iced caramel latte", detail: "Frío, para tomar o para llevar" },
-      ] },
-      { name: "Bollería", items: [
-        { name: "Argentinos de chocolate", detail: "Crujientes por fuera, chocolate por dentro" },
-        { name: "Croissant de pistacho", detail: "Con crema de pistacho" },
-        { name: "Croissants", detail: "Para desayunar o merendar" },
-      ] },
-      { name: "Brunch", items: [
-        { name: "Yogur griego con fruta fresca", detail: "Kiwi, plátano y toppings" },
-        { name: "Vegetal XL", detail: "Bocadillo vegetal con salmón y rúcula" },
-      ] },
-    ],
-    note: "Abrimos todos los días · Carrer de Tapioles, 21 · Blanes",
-  },
-  gallery: {
-    id: "galeria",
-    eyebrow: "Galería",
-    title: "Cacau *vibes.*",
-    items: [
-      { type: "image", src: "/media/vegetal-1.webp", alt: "Bocadillo Vegetal XL con salmón y rúcula" },
-      { type: "image", src: "/media/bowl-2.webp", alt: "Bowl de yogur con fruta fresca" },
-      { type: "image", src: "/media/post-0.webp", alt: "Bollería artesanal para llevar" },
-      { type: "image", src: "/media/caramel-latte.jpg", alt: "Caramel latte con bollería" },
-      { type: "image", src: "/media/vegetal-3.webp", alt: "Vegetal XL en plato" },
-      { type: "image", src: "/media/para-llevar.jpg", alt: "Bolsa para llevar de Cacau Cafè" },
-      { type: "image", src: "/media/bowl-3.webp", alt: "Bowl de yogur y cuchara de madera" },
-      { type: "image", src: "/media/rutina.jpg", alt: "Café en la terraza de la calle Tapioles" },
-      { type: "image", src: "/media/vegetal-0.webp", alt: "Vegetal XL recién preparado" },
-      { type: "image", src: "/media/post-2.webp", alt: "Bollería artesanal" },
-    ],
-  },
-  reels: {
-    id: "videos",
-    eyebrow: "Así se vive",
-    title: "Así se vive *Cacau Cafè.*",
-    items: [
-      { type: "video", src: "/media/caramel-latte.mp4", poster: "/media/caramel-latte.jpg", alt: "Si lo estás viendo, es una señal" },
-      { type: "video", src: "/media/rutina.mp4", poster: "/media/rutina.jpg", alt: "Vuelta a la rutina, sin prisas" },
-      { type: "video", src: "/media/para-llevar.mp4", poster: "/media/para-llevar.jpg", alt: "Moments" },
-      { type: "video", src: "/media/bowl-yogur.mp4", poster: "/media/bowl-yogur.webp", alt: "Yogur griego con fruta fresca" },
-    ],
-  },
-  contact: {
-    id: "visitanos",
-    eyebrow: "Visítanos",
-    title: "Te esperamos *en Tapioles.*",
-    address: ["Carrer de Tapioles, 21", "17300 Blanes (Girona)"],
-    directionsUrl: MAPS,
-    mapEmbed: "https://www.google.com/maps?q=Cacau+Caf%C3%A8,+Carrer+de+Tapioles+21,+17300+Blanes&z=17&output=embed",
-    phone: { label: "669 78 59 51", href: `tel:${PHONE}` },
+
+  footer: {
+    address: { label: "Carrer de Tapioles, 21 · 17300 Blanes", href: MAPS },
+    contacts: [{ label: "669 78 59 51", href: `tel:${PHONE}` }],
     hours: [{ day: "Todos los días", value: "Abierto" }],
-    hoursNote: "Consulta el horario actualizado en nuestro Instagram (destacado «Horarios»).",
-    socials: [{ label: "Instagram de Cacau Cafè", href: IG, icon: "instagram" }],
+    hoursNote: "Horario detallado en el destacado «Horarios» de su Instagram.",
+    socials: [{ label: "Instagram", href: IG }],
+    sources: "Fotos y vídeos: Instagram @cacau_cafe_blanes",
+    line: "© 2026 Cacau Cafè · Blanes",
   },
-  finale: {
-    title: "¿Un café *sin prisas?*",
-    text: "Tu desayuno y tu merienda te están esperando.",
-    cta: { label: "Cómo llegar", href: MAPS, external: true },
-    media: { type: "image", src: "/media/compartir.jpg", alt: "" },
-  },
-  floating: { label: "Llamar", href: `tel:${PHONE}`, icon: "phone" },
-  footer: { line: "© 2026 Cacau Cafè · Blanes", credit: "Diseño web por DURDUC" },
 };
