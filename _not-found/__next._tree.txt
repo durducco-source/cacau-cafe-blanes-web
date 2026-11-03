@@ -1,0 +1,4 @@
+:HL["/cacau-cafe-blanes-web/_next/static/chunks/42hvkcbh0ej0w.css","style"]
+2:[["children",{"s":"__PAGE__","h":160}]]
+1:[["children",{"s":"/_not-found","h":96,"c":"$Q2"}]]
+0:{"b":"rp1b25QFCUEXHbTrFTdEJ","t":{"t":{"s":"","h":80,"c":"$Q1"}}}

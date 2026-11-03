@@ -1,0 +1,6 @@
+:HL["/cacau-cafe-blanes-web/_next/static/chunks/42hvkcbh0ej0w.css","style"]
+:HL["/cacau-cafe-blanes-web/_next/static/media/660acf689794c992-s.p.2_mbdogr7ni8i.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cacau-cafe-blanes-web/_next/static/media/d90dd95b053d9495-s.p.3r2y_bth_sjsm.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cacau-cafe-blanes-web/_next/static/media/dcfedef55b10026d-s.p.40m0sdlh8l0dz.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+1:[["children",{"s":"__PAGE__","h":160}]]
+0:{"b":"rp1b25QFCUEXHbTrFTdEJ","t":{"t":{"s":"","h":80,"c":"$Q1"}}}
